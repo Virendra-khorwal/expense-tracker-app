@@ -4,6 +4,7 @@
     "slug": "expense-tracker-app",
     "version": "1.0.0",
     "orientation": "portrait",
+    "backgroundColor": "white",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
