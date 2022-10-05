@@ -7,7 +7,7 @@
 
 ### Screenshot
 ![Home Page](./homepage.png)
-<img src="./homepage.png" />
+
 
 ### Buy me Coffee
 [![](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/virendrakhorwal)
