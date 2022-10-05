@@ -25,7 +25,7 @@ const ExpenseCard = ({ itemData}) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: GlobalStyles.colors.white,
-    width: 340,
+    width: "100%",
     borderRadius: 4,
     elevation: 2,
     padding: 12,
@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
     marginVertical: 4,
     fontSize: 16,
   },
-  
 });
 
 export default ExpenseCard;
