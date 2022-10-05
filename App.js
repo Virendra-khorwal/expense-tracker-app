@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { AntDesign, Entypo } from '@expo/vector-icons'
-
+import { Ionicons } from '@expo/vector-icons';
 import AllExpenses from './screens/AllExpenses';
 import ManageExpenses from './screens/ManageExpenses';
 import RecentExpenses from './screens/RecentExpenses';
@@ -28,6 +28,12 @@ const BottomTabs = () => {
         title: "All Expenses",
         headerTintColor: GlobalStyles.colors.blueDark,
 
+      }} />
+      <Tab.Screen name='ManageExpenses' component={ManageExpenses} options={{
+        tabBarIcon: ({ focused, size }) => <Ionicons style={styles.icon}  name="add-outline" size={size} color={focused ? GlobalStyles.colors.white : GlobalStyles.colors.gray} />,
+        title: "Manage Expenses",
+        headerTintColor: GlobalStyles.colors.blueDark,
+        // tabBarItemStyle : { backgroundColor: GlobalStyles.colors.blue}
       }} />
       {/* <Tab.Screen name='ManageExpenses' component={ManageExpenses} /> */}
       <Tab.Screen name='RecentExpenses' component={RecentExpenses} options={{
@@ -64,5 +70,13 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  icon: {
+    backgroundColor: GlobalStyles.colors.blue,
+    padding: 6,
+    paddingHorizontal: 7,
+    borderRadius: 30,
+    // position: 'absolute',
+    // top: -14,
 
+    }
 });

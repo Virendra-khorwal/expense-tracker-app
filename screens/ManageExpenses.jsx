@@ -67,10 +67,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    paddingHorizontal: 20,
   },
   innerContainer: {
     backgroundColor: GlobalStyles.colors.white,
-    width: 350,
+    width: "100%",
     padding: 10,
     borderRadius: 4,
     elevation: 2,
@@ -83,10 +84,13 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     color: GlobalStyles.colors.blue,
     fontSize: 20,
+    borderBottomColor: GlobalStyles.colors.blueDark,
+    borderBottomWidth: 1,
+    flex: 1,
   },
   headerBox: {
     backgroundColor: GlobalStyles.colors.white,
-    width: 350,
+    width: "100%",
     padding: 12,
     marginVertical: 20,
     borderRadius: 4,
@@ -97,9 +101,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: GlobalStyles.colors.blue,
   },
-  box : {
-    width: 20
-  }
+  box: {
+    width: 20,
+  },
 });
 
 export default ManageExpenses;

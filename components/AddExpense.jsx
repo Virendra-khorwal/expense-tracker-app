@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         elevation: 4,
         marginVertical: 10,
+        width: "100%",
     },
     innerContainer: {
         padding: 10,
