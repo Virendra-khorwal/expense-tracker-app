@@ -1,14 +1,17 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { GlobalStyles } from "../constants/styles";
 
-const ExpenseCard = ({ title, amount }) => {
+const ExpenseCard = ({ itemData}) => {
+
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.subtitle}>{amount} $</Text>
+        <Text style={styles.title}>{itemData.title}</Text>
+        <Text style={styles.subtitle}>{itemData.amount} ₹</Text>
+        <Text>
+          {itemData.date.toDateString()}
+        </Text>
       </View>
       <View>
         <Pressable>
@@ -29,6 +32,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    marginVertical: 6,
   },
   title: {
     fontWeight: "bold",
@@ -36,8 +40,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   subtitle: {
-    color: GlobalStyles.colors.gray,
-    marginTop: 4,
+    color: GlobalStyles.colors.blueDark,
+    marginVertical: 4,
+    fontSize: 16,
   },
   
 });

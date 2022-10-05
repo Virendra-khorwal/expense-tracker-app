@@ -4,17 +4,19 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import AddExpense from "../components/AddExpense";
 import { useState } from "react";
+import {addExpense} from '../Redux/dataSlice'
+import { useDispatch } from "react-redux";
 
 const ManageExpenses = ({ route, navigation }) => {
 
-    const {title, setTitle} = useState("");
-    const {amount, setAmount} = useState("");
+    const [title, setTitle] = useState("");
+    const [amount, setAmount] = useState("");
 
-    console.log(title)
+    const dispatch = useDispatch()
 
-    const onChangeText = (e) => {
-        setTitle(e.value.target.title)
-        setAmount(e.value.target.amount)
+    const onSave = () => {
+        dispatch(addExpense({title: title, amount: amount}))
+        console.log(title)
     }
 
   return (
@@ -35,7 +37,7 @@ const ManageExpenses = ({ route, navigation }) => {
             placeholder="Title"
             value={title}
             cursorColor={GlobalStyles.colors.blue}
-            onChangeText={onChangeText}
+            onChangeText={(e) => setTitle(e)}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -51,11 +53,11 @@ const ManageExpenses = ({ route, navigation }) => {
             placeholder="Amount"
             value={amount}
             cursorColor={GlobalStyles.colors.blue}
-            onChangeText={onChangeText}
+            onChangeText={(e) => setAmount(e)}
           />
         </View>
       </View>
-      <AddExpense title="Add" />
+      <AddExpense title="Add" onPress={onSave} />
     </View>
   );
 };

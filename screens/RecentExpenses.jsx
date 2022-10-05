@@ -5,7 +5,7 @@ import { GlobalStyles } from "../constants/styles";
 const RecentExpenses = () => {
     return (
       <View style={styles.container}>
-        <ExpenseCard title="Test" amount="50" />
+        {/* <ExpenseCard title="Test" amount="50" /> */}
       </View>
     );
 }

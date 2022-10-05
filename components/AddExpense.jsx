@@ -1,18 +1,14 @@
-import { useNavigation } from "@react-navigation/native";
+
 import { Pressable, View, Text, StyleSheet } from "react-native"
 import { GlobalStyles } from "../constants/styles";
 
 
-const AddExpense = ({title}) => {
-    const navigation = useNavigation();
-
-    const onNavigate = () => {
-        navigation.navigate("ManageExpenses");
-    }
+const AddExpense = ({title, onPress}) => {
+    
 
     return (
         <View style={styles.container}>
-            <Pressable style={styles.innerContainer} android_ripple={{ color: 'white'}} onPress={onNavigate}>
+            <Pressable style={styles.innerContainer} android_ripple={{ color: 'white'}} onPress={onPress}>
                 <Text style={styles.text} >
                     {title}
                 </Text>
