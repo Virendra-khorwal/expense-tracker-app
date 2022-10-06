@@ -27,13 +27,14 @@ const BottomTabs = () => {
         tabBarIcon: ({ focused, size }) => <Entypo name='bar-graph' size={size} color={focused ? GlobalStyles.colors.blue : GlobalStyles.colors.gray} />,
         title: "All Expenses",
         headerTintColor: GlobalStyles.colors.blueDark,
+        
 
       }} />
       <Tab.Screen name='ManageExpenses' component={ManageExpenses} options={{
-        tabBarIcon: ({ focused, size }) => <Ionicons style={styles.icon}  name="add-outline" size={size} color={focused ? GlobalStyles.colors.white : GlobalStyles.colors.gray} />,
+        tabBarIcon: ({ focused, size }) => <Ionicons style={{...styles.icon, ...(focused && styles.focused )}} name="add-outline" size={size + 14} color={focused ? GlobalStyles.colors.white : GlobalStyles.colors.blue} />,
         title: "Manage Expenses",
         headerTintColor: GlobalStyles.colors.blueDark,
-        // tabBarItemStyle : { backgroundColor: GlobalStyles.colors.blue}
+        
       }} />
       {/* <Tab.Screen name='ManageExpenses' component={ManageExpenses} /> */}
       <Tab.Screen name='RecentExpenses' component={RecentExpenses} options={{
@@ -71,12 +72,14 @@ export default function App() {
 
 const styles = StyleSheet.create({
   icon: {
-    backgroundColor: GlobalStyles.colors.blue,
+    backgroundColor: GlobalStyles.colors.whiteBlue,
     padding: 6,
     paddingHorizontal: 7,
     borderRadius: 30,
-    // position: 'absolute',
-    // top: -14,
-
+    position: 'absolute',
+    top: -24,
+    },
+    focused: {
+      backgroundColor: GlobalStyles.colors.blue,
     }
 });
