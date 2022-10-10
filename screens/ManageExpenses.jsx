@@ -3,21 +3,30 @@ import { GlobalStyles } from "../constants/styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import AddExpense from "../components/AddExpense";
-import { useState } from "react";
-import {addExpense} from '../Redux/dataSlice'
+import { useLayoutEffect, useState } from "react";
+import { addExpense } from "../Redux/dataSlice";
 import { useDispatch } from "react-redux";
+import { Ionicons } from "@expo/vector-icons";
 
 const ManageExpenses = ({ route, navigation }) => {
+  const [title, setTitle] = useState("");
+  const [amount, setAmount] = useState("");
 
-    const [title, setTitle] = useState("");
-    const [amount, setAmount] = useState("");
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch()
+  const editedItemId = route.params?.expenseId;
+  const isEdited = !!editedItemId;
 
-    const onSave = () => {
-        dispatch(addExpense({title: title, amount: amount}))
-        console.log(title)
-    }
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: isEdited ? "Edit Expense" : "Add Expense",
+    });
+  }, [navigation, isEdited]);
+
+  const onSave = () => {
+    dispatch(addExpense({ title: title, amount: amount }));
+    console.log(title);
+  };
 
   return (
     <View style={styles.container}>
@@ -57,7 +66,35 @@ const ManageExpenses = ({ route, navigation }) => {
           />
         </View>
       </View>
-      <AddExpense title="Add" onPress={onSave} />
+      <View style={styles.buttonContainer}>
+        <AddExpense
+          title={
+            <Ionicons
+              name="checkmark-circle"
+              size={24}
+              color={GlobalStyles.colors.blue}
+              bgColor={GlobalStyles.colors.white}
+            />
+          }
+          onPress={onSave}
+        />
+        <AddExpense
+          title={
+            <MaterialIcons
+              name="delete"
+              size={24}
+              color={GlobalStyles.colors.red}
+              bgColor={GlobalStyles.colors.white}
+            />
+          }
+          onPress=""
+        />
+        <AddExpense
+          title={<MaterialIcons name="cancel" size={24} color="yellow" />}
+          onPress=""
+          bgColor={GlobalStyles.colors.blue}
+        />
+      </View>
     </View>
   );
 };
@@ -103,6 +140,10 @@ const styles = StyleSheet.create({
   },
   box: {
     width: 20,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: 'space-between',
   },
 });
 

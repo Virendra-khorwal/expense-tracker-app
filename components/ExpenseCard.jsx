@@ -1,12 +1,21 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { GlobalStyles } from "../constants/styles";
+import { useNavigation } from "@react-navigation/native";
 
 const ExpenseCard = ({ itemData}) => {
 
+  const navigation = useNavigation();
+
+  const onPressHandler = () => {
+    navigation.navigate('ManageExpenses', {
+      expenseId : itemData.id,
+    })
+  }
+
   return (
     <View style={styles.container}>
-      <Pressable style={styles.innerContainer}>
+      <Pressable style={styles.innerContainer} android_ripple={{elevation: 10, color: GlobalStyles.colors.blue}} onPress={onPressHandler}>
         <View>
           <Text style={styles.title}>{itemData.title}</Text>
 
@@ -26,9 +35,9 @@ const styles = StyleSheet.create({
     // width: "100%",
     borderRadius: 4,
     elevation: 2,
-    padding: 12,
-    flexDirection: "row",
 
+    flexDirection: "row",
+    overflow: 'hidden',
     marginVertical: 6,
   },
   title: {
@@ -52,6 +61,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    padding: 12,
   },
 });
 
