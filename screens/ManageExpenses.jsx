@@ -4,7 +4,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import AddExpense from "../components/AddExpense";
 import { useLayoutEffect, useState } from "react";
-import { addExpense } from "../Redux/dataSlice";
+import { addExpense, removeExpense } from "../Redux/dataSlice";
 import { useDispatch } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -24,9 +24,19 @@ const ManageExpenses = ({ route, navigation }) => {
   }, [navigation, isEdited]);
 
   const onSave = () => {
-    dispatch(addExpense({ title: title, amount: amount }));
-    console.log(title);
+    const currDate = new Date().toDateString();
+    const randomId = Date.now().toString + Math.random().toString;
+    dispatch(addExpense({ id: randomId, title: title, amount: amount*1, date: currDate }));
+    navigation.goBack();
   };
+
+  const onRemove = () => {
+    dispatch(removeExpense({id: editedItemId}))
+  };
+
+  const onCancel = () => {
+    navigation.goBack();
+  }
 
   return (
     <View style={styles.container}>
@@ -87,11 +97,11 @@ const ManageExpenses = ({ route, navigation }) => {
               bgColor={GlobalStyles.colors.white}
             />
           }
-          onPress=""
+          onPress={onRemove}
         />
         <AddExpense
           title={<MaterialIcons name="cancel" size={24} color="yellow" />}
-          onPress=""
+          onPress={onCancel}
           bgColor={GlobalStyles.colors.blue}
         />
       </View>
@@ -143,7 +153,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: "row",
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
 });
 

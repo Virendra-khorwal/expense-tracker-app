@@ -12,14 +12,14 @@ const ExpenseCard = ({ itemData}) => {
       expenseId : itemData.id,
     })
   }
-
+  
   return (
     <View style={styles.container}>
       <Pressable style={styles.innerContainer} android_ripple={{elevation: 10, color: GlobalStyles.colors.blue}} onPress={onPressHandler}>
         <View>
           <Text style={styles.title}>{itemData.title}</Text>
 
-          <Text>{itemData.date.toDateString()}</Text>
+          <Text>{itemData.date}</Text>
         </View>
         <View style={styles.priceContainer}>
           <Text style={styles.subtitle}>{itemData.amount} ₹</Text>
