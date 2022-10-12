@@ -5,6 +5,7 @@ import ExpenseCard from "../components/ExpenseCard";
 import { GlobalStyles } from "../constants/styles";
 import ExpenseList from "../components/ExpenseList";
 import { useSelector } from "react-redux";
+import Button from "../util/button";
 
 const AllExpenses = () => {
   const navigation = useNavigation();
@@ -18,7 +19,12 @@ const AllExpenses = () => {
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
-        <AddExpense title="Add Expense" onPress={onNavigate} />
+        <Button
+          title="Add Expense"
+          bgColor={GlobalStyles.colors.blue}
+          color={GlobalStyles.colors.white}
+          onPress={onNavigate}
+        />
       </View>
       <ExpenseList expense={expenseData} />
     </View>
@@ -34,6 +40,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: "100%",
+    marginBottom: 10,
   }
 });
 

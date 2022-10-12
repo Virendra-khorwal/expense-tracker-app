@@ -1,13 +1,25 @@
-import { Pressable, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
-const button = ({ color, title, bgColor }) => {
+const Button = ({ color, title, bgColor, onPress }) => {
   return (
-    <View>
-      <Pressable>
-        <Text>{title}</Text>
+    <View style={styles.container}>
+      <Pressable style={{...styles.innerContainer, backgroundColor: bgColor}} onPress={onPress} android_ripple={{color: "#333"}}>
+        <Text style={{...styles.text, color: color}} >{title}</Text>
       </Pressable>
     </View>
   );
 };
 
-export default button;
+const styles = StyleSheet.create({
+  container: {
+    overflow: "hidden",
+    borderRadius: 4,
+  },
+  innerContainer: {
+    padding: 10,
+    alignItems: "center",
+  },
+  text: {},
+});
+
+export default Button;

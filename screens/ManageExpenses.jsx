@@ -1,12 +1,15 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { GlobalStyles } from "../constants/styles";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from "@expo/vector-icons";
 import AddExpense from "../components/AddExpense";
 import { useLayoutEffect, useState } from "react";
 import { addExpense, removeExpense } from "../Redux/dataSlice";
 import { useDispatch } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome5 } from "@expo/vector-icons";
+import ButtonIcon from "../util/buttonIcon";
 
 const ManageExpenses = ({ route, navigation }) => {
   const [title, setTitle] = useState("");
@@ -77,32 +80,24 @@ const ManageExpenses = ({ route, navigation }) => {
         </View>
       </View>
       <View style={styles.buttonContainer}>
-        <AddExpense
-          title={
-            <Ionicons
-              name="checkmark-circle"
-              size={24}
-              color={GlobalStyles.colors.blue}
-              bgColor={GlobalStyles.colors.white}
-            />
-          }
+        <ButtonIcon
+          icon={<FontAwesome5 name="check" size={24} />}
+          color={GlobalStyles.colors.white}
+          bgColor={GlobalStyles.colors.blue}
           onPress={onSave}
         />
-        <AddExpense
-          title={
-            <MaterialIcons
-              name="delete"
-              size={24}
-              color={GlobalStyles.colors.red}
-              bgColor={GlobalStyles.colors.white}
-            />
-          }
-          onPress={onRemove}
-        />
-        <AddExpense
-          title={<MaterialIcons name="cancel" size={24} color="yellow" />}
+        {isEdited && (
+          <ButtonIcon
+            icon={<MaterialIcons name="delete" size={24} />}
+            color={GlobalStyles.colors.white}
+            bgColor={GlobalStyles.colors.red}
+          />
+        )}
+        <ButtonIcon
+          icon={<FontAwesome name="remove" size={24} />}
+          color={GlobalStyles.colors.white}
+          bgColor={GlobalStyles.colors.yellow}
           onPress={onCancel}
-          bgColor={GlobalStyles.colors.blue}
         />
       </View>
     </View>
@@ -153,7 +148,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: "row",
+    width: "80%",
     justifyContent: "space-between",
+    marginTop: 10,
   },
 });
 

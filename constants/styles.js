@@ -6,6 +6,7 @@ export const GlobalStyles = {
         "blue": '#576be8',
         "blueDark": '#0a0c1b',
         "red": "#ff6161",
-        "gray": "#c5c5c5"
+        "gray": "#c5c5c5",
+        "yellow": "#FFBD33"
     }
 }
