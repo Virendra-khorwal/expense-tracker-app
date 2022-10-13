@@ -1,11 +1,19 @@
+import { useContext } from "react";
 import { StyleSheet, View } from "react-native";
-import ExpenseCard from "../components/ExpenseCard";
-import { GlobalStyles } from "../constants/styles";
+
+import ExpenseList from "../components/ExpenseList";
+
+import { ExpenseContext } from "../store/expenseContext";
 
 const RecentExpenses = () => {
+    const expenseCtx = useContext(ExpenseContext);
+    const today = new Date().toDateString();
+    const expenseData = expenseCtx.expenses
+
+
     return (
       <View style={styles.container}>
-        {/* <ExpenseCard title="Test" amount="50" /> */}
+        <ExpenseList expense={expenseData} />
       </View>
     );
 }
@@ -14,7 +22,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    paddingVertical: 50,
+    paddingVertical: 2,
+    paddingHorizontal: 30,
   },
 });
 

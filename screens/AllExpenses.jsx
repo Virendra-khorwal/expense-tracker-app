@@ -1,11 +1,13 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet,View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import AddExpense from "../components/AddExpense";
-import ExpenseCard from "../components/ExpenseCard";
+
+
 import { GlobalStyles } from "../constants/styles";
 import ExpenseList from "../components/ExpenseList";
-import { useSelector } from "react-redux";
+
 import Button from "../util/button";
+import { useContext } from "react";
+import { ExpenseContext } from "../store/expenseContext";
 
 const AllExpenses = () => {
   const navigation = useNavigation();
@@ -14,7 +16,7 @@ const AllExpenses = () => {
     navigation.navigate("ManageExpenses");
   };
 
-  const expenseData = useSelector(state => state.expense.data)
+  const expenseCtx = useContext(ExpenseContext);
 
   return (
     <View style={styles.container}>
@@ -26,7 +28,7 @@ const AllExpenses = () => {
           onPress={onNavigate}
         />
       </View>
-      <ExpenseList expense={expenseData} />
+      <ExpenseList expense={expenseCtx.expenses} />
     </View>
   );
 };

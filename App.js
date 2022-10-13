@@ -2,15 +2,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { AntDesign, Entypo } from '@expo/vector-icons'
 import { Ionicons } from '@expo/vector-icons';
 import AllExpenses from './screens/AllExpenses';
 import ManageExpenses from './screens/ManageExpenses';
 import RecentExpenses from './screens/RecentExpenses';
 import { GlobalStyles } from './constants/styles';
-import { Provider, useSelector } from 'react-redux';
-import { store } from './store/store';
+import ExpenseContextProvider from './store/expenseContext';
 
 
 const Stack = createNativeStackNavigator();
@@ -51,7 +50,7 @@ export default function App() {
 
   return (
     <>
-      <Provider store={store}>
+      <ExpenseContextProvider>
         <NavigationContainer >
           <Stack.Navigator>
             <Stack.Screen name='BottomNav' component={BottomTabs} options={{
@@ -64,7 +63,7 @@ export default function App() {
 
           </Stack.Navigator>
         </NavigationContainer>
-      </Provider>
+      </ExpenseContextProvider>
       <StatusBar style="auto" />
     </>
   );

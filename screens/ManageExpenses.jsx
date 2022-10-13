@@ -2,20 +2,20 @@ import { StyleSheet, Text, TextInput, View } from "react-native";
 import { GlobalStyles } from "../constants/styles";
 import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from "@expo/vector-icons";
-import AddExpense from "../components/AddExpense";
-import { useLayoutEffect, useState } from "react";
-import { addExpense, removeExpense } from "../Redux/dataSlice";
-import { useDispatch } from "react-redux";
-import { Ionicons } from "@expo/vector-icons";
+
+import { useContext, useLayoutEffect, useState } from "react";
+
+
 import { FontAwesome } from '@expo/vector-icons';
 import { FontAwesome5 } from "@expo/vector-icons";
 import ButtonIcon from "../util/buttonIcon";
+import { ExpenseContext } from "../store/expenseContext";
 
 const ManageExpenses = ({ route, navigation }) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
+  const expenseCtx = useContext(ExpenseContext)
 
-  const dispatch = useDispatch();
 
   const editedItemId = route.params?.expenseId;
   const isEdited = !!editedItemId;
@@ -29,14 +29,17 @@ const ManageExpenses = ({ route, navigation }) => {
   const onSave = () => {
     const currDate = new Date().toDateString();
     const randomId = Date.now().toString + Math.random().toString;
-    dispatch(addExpense({ id: randomId, title: title, amount: amount*1, date: currDate }));
+    
     setTitle("");
     setAmount(null);
     navigation.goBack();
   };
 
   const onRemove = () => {
-    dispatch(removeExpense({id: editedItemId}))
+    // dispatch(removeExpense({id: editedItemId}))
+    console.log(editedItemId)
+    expenseCtx.removeExpense(editedItemId);
+    navigation.goBack();
   };
 
   const onCancel = () => {
@@ -95,6 +98,7 @@ const ManageExpenses = ({ route, navigation }) => {
             icon={<MaterialIcons name="delete" size={24} />}
             color={GlobalStyles.colors.white}
             bgColor={GlobalStyles.colors.red}
+            onPress={onRemove}
           />
         )}
         <ButtonIcon
