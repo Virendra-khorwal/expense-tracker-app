@@ -30,6 +30,8 @@ const ManageExpenses = ({ route, navigation }) => {
     const currDate = new Date().toDateString();
     const randomId = Date.now().toString + Math.random().toString;
     dispatch(addExpense({ id: randomId, title: title, amount: amount*1, date: currDate }));
+    setTitle("");
+    setAmount(null);
     navigation.goBack();
   };
 
@@ -38,6 +40,8 @@ const ManageExpenses = ({ route, navigation }) => {
   };
 
   const onCancel = () => {
+    setTitle(""); 
+    setAmount(null);
     navigation.goBack();
   }
 
