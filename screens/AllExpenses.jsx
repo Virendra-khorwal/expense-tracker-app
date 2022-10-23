@@ -1,4 +1,4 @@
-import { StyleSheet,View } from "react-native";
+import { StyleSheet,View, Image, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 
@@ -29,11 +29,12 @@ const AllExpenses = () => {
         />
       </View>
       {
-        expenseCtx.expense.length() > 0 ? (
+        expenseCtx.expenses.length > 0 ? (
           <ExpenseList expense={expenseCtx.expenses} />)
           : (
-            <View>
-
+            <View style={styles.imageContainer} >
+              <Text style={styles.imageText} > No Item Found!</Text>
+              <Image style={styles.image} source={require('../assets/images/emptylist.jpg')} />
             </View>
           )
       }
@@ -52,6 +53,21 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width: "100%",
     marginBottom: 10,
+  },
+  image: {
+    height: 300,
+    width: 300,
+    borderRadius: 6
+  },
+  imageContainer : {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex:1
+  },
+  imageText: {
+    marginVertical: 20,
+    fontWeight: 'bold',
+    color: GlobalStyles.colors.red,
   }
 });
 
