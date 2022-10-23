@@ -28,7 +28,16 @@ const AllExpenses = () => {
           onPress={onNavigate}
         />
       </View>
-      <ExpenseList expense={expenseCtx.expenses} />
+      {
+        expenseCtx.expense.length() > 0 ? (
+          <ExpenseList expense={expenseCtx.expenses} />)
+          : (
+            <View>
+
+            </View>
+          )
+      }
+      
     </View>
   );
 };

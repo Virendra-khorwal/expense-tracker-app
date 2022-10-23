@@ -29,12 +29,12 @@ const BottomTabs = () => {
         
 
       }} />
-      <Tab.Screen name='ManageExpenses' component={ManageExpenses} options={{
+      {/* <Tab.Screen name='ManageExpenses' component={ManageExpenses} options={{
         tabBarIcon: ({ focused, size }) => <Ionicons style={{...styles.icon, ...(focused && styles.focused )}} name="add-outline" size={size + 14} color={focused ? GlobalStyles.colors.white : GlobalStyles.colors.blue} />,
         title: "Manage Expenses",
         headerTintColor: GlobalStyles.colors.blueDark,
         
-      }} />
+      }} /> */}
       {/* <Tab.Screen name='ManageExpenses' component={ManageExpenses} /> */}
       <Tab.Screen name='RecentExpenses' component={RecentExpenses} options={{
         tabBarIcon: ({ focused, size }) => <AntDesign name="clockcircle" size={size} color={focused ? GlobalStyles.colors.blue : GlobalStyles.colors.gray} />,

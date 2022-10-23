@@ -3,7 +3,7 @@ import { GlobalStyles } from "../constants/styles";
 import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from "@expo/vector-icons";
 
-import { useContext, useLayoutEffect, useState } from "react";
+import { useContext, useEffect, useLayoutEffect, useState } from "react";
 
 
 import { FontAwesome } from '@expo/vector-icons';
@@ -12,13 +12,25 @@ import ButtonIcon from "../util/buttonIcon";
 import { ExpenseContext } from "../store/expenseContext";
 
 const ManageExpenses = ({ route, navigation }) => {
-  const [title, setTitle] = useState("");
-  const [amount, setAmount] = useState("");
+  
   const expenseCtx = useContext(ExpenseContext)
 
-
   const editedItemId = route.params?.expenseId;
-  const isEdited = !!editedItemId;
+  let isEdited = !!editedItemId;
+
+  const expenseItem = expenseCtx.expenses.find((expense) => expense.id === editedItemId)
+  const [title, setTitle] = useState(isEdited ? expenseItem.title : "");
+  const [amount, setAmount] = useState(
+    isEdited ? expenseItem.amount.toString() : ""
+  );
+
+  useEffect(() => {
+    if(isEdited){
+      setTitle(expenseItem.title)
+      setAmount(expenseItem.amount.toString())
+    }
+    
+  }, [isEdited])
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -27,8 +39,9 @@ const ManageExpenses = ({ route, navigation }) => {
   }, [navigation, isEdited]);
 
   const onSave = () => {
-    const currDate = new Date().toDateString();
-    const randomId = Date.now().toString + Math.random().toString;
+   
+    const date = new Date().toDateString()
+    expenseCtx.addExpense({title: title, amount: amount*1, date: date})
     
     setTitle("");
     setAmount(null);
@@ -46,6 +59,12 @@ const ManageExpenses = ({ route, navigation }) => {
     setTitle(""); 
     setAmount(null);
     navigation.goBack();
+  }
+
+  const onUpdate = () => {
+    expenseCtx.updateExpense(editedItemId, {title, amount: amount*1});
+    navigation.goBack();
+
   }
 
   return (
@@ -91,7 +110,7 @@ const ManageExpenses = ({ route, navigation }) => {
           icon={<FontAwesome5 name="check" size={24} />}
           color={GlobalStyles.colors.white}
           bgColor={GlobalStyles.colors.blue}
-          onPress={onSave}
+          onPress={isEdited? onUpdate: onSave}
         />
         {isEdited && (
           <ButtonIcon
