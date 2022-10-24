@@ -1,28 +1,40 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
 
 import ExpenseList from "../components/ExpenseList";
 import { GlobalStyles } from "../constants/styles";
 import { ExpenseContext } from "../store/expenseContext";
 import { fetchExpense } from "../util/http";
+import { getDateMinusDays } from "../util/date";
 
 const RecentExpenses = () => {
     const expenseCtx = useContext(ExpenseContext);
-    const today = new Date().toDateString();
-    const expenseData = expenseCtx.expenses
+    // const today = new Date().toDateString();
+    // const expenseData = expenseCtx.expenses
+    const [fetchedExpenses, setFetchtedexpenses] = useState([]);
 
     useEffect(() => {
       const getExpenses = async() => {
         const expenses = await fetchExpense();
+        setFetchtedexpenses(expenses);
+        expenseCtx.setExpense(expenses);
       }
 
       getExpenses();
     },[])
 
+    // const recentExpenses = fetchedExpenses.filter((expense) => {
+    //   const today = new Date();
+    //   const date7DaysAgo = getDateMinusDays(today, 7);
+
+    //   return expense.data >= date7DaysAgo.toDateString() && expense.date <= today.toDateString()
+    // })
+    console.log(expenseCtx.expense)
+
     return (
       <View style={styles.container}>
-        {expenseData.length > 0 ? (
-          <ExpenseList expense={expenseData} />
+        {expenseCtx.expense.length > 0 ? (
+          <ExpenseList expense={expenseCtx.expense} />
         ) : (
           <View style={styles.imageContainer}>
             <Text style={styles.imageText}> No recent Item Found!</Text>
@@ -42,6 +54,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 2,
     paddingHorizontal: 30,
+    marginTop: 14,
   },
   image: {
     height: 300,

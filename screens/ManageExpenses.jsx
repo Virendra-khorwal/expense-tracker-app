@@ -39,11 +39,12 @@ const ManageExpenses = ({ route, navigation }) => {
     });
   }, [navigation, isEdited]);
 
-  const onSave = () => {
+  const onSave = async() => {
     
     const date = new Date().toDateString()
-    expenseCtx.addExpense({title: title, amount: amount*1, date: date})
-    storeExpense({ title: title, amount: amount * 1, date: date });
+    
+    const id = await storeExpense({ title: title, amount: amount * 1, date: date });
+    expenseCtx.addExpense({ title: title, amount: amount * 1, date: date, id: id });
     setTitle("");
     setAmount(null);
     navigation.goBack();
