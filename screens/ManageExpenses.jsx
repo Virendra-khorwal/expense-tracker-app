@@ -10,6 +10,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { FontAwesome5 } from "@expo/vector-icons";
 import ButtonIcon from "../util/buttonIcon";
 import { ExpenseContext } from "../store/expenseContext";
+import { storeExpense } from "../util/http";
 
 const ManageExpenses = ({ route, navigation }) => {
   
@@ -39,10 +40,10 @@ const ManageExpenses = ({ route, navigation }) => {
   }, [navigation, isEdited]);
 
   const onSave = () => {
-   
+    
     const date = new Date().toDateString()
     expenseCtx.addExpense({title: title, amount: amount*1, date: date})
-    
+    storeExpense({ title: title, amount: amount * 1, date: date });
     setTitle("");
     setAmount(null);
     navigation.goBack();

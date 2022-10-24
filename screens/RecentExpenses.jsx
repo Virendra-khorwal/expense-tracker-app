@@ -1,15 +1,23 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
 
 import ExpenseList from "../components/ExpenseList";
 import { GlobalStyles } from "../constants/styles";
 import { ExpenseContext } from "../store/expenseContext";
+import { fetchExpense } from "../util/http";
 
 const RecentExpenses = () => {
     const expenseCtx = useContext(ExpenseContext);
     const today = new Date().toDateString();
     const expenseData = expenseCtx.expenses
 
+    useEffect(() => {
+      const getExpenses = async() => {
+        const expenses = await fetchExpense();
+      }
+
+      getExpenses();
+    },[])
 
     return (
       <View style={styles.container}>
