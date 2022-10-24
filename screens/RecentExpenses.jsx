@@ -29,12 +29,12 @@ const RecentExpenses = () => {
 
     //   return expense.data >= date7DaysAgo.toDateString() && expense.date <= today.toDateString()
     // })
-    console.log(expenseCtx.expense)
+    console.log(expenseCtx.expenses)
 
     return (
       <View style={styles.container}>
-        {expenseCtx.expense.length > 0 ? (
-          <ExpenseList expense={expenseCtx.expense} />
+        {expenseCtx.expenses.length > 0 ? (
+          <ExpenseList expense={expenseCtx.expenses} />
         ) : (
           <View style={styles.imageContainer}>
             <Text style={styles.imageText}> No recent Item Found!</Text>
