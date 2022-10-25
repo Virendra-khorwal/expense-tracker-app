@@ -1,37 +1,41 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { GlobalStyles } from "../constants/styles";
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 
 import { useContext, useEffect, useLayoutEffect, useState } from "react";
 
-
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import ButtonIcon from "../util/buttonIcon";
 import { ExpenseContext } from "../store/expenseContext";
-import { storeExpense } from "../util/http";
+import { storeExpense, updateExpense, deleteExpense } from "../util/http";
+import LoadingOverlay from "../util/LoadingOverlay";
+import ErrorOverlay from "../util/ErrorOverlay";
 
 const ManageExpenses = ({ route, navigation }) => {
-  
-  const expenseCtx = useContext(ExpenseContext)
+  const expenseCtx = useContext(ExpenseContext);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState();
 
   const editedItemId = route.params?.expenseId;
   let isEdited = !!editedItemId;
 
-  const expenseItem = expenseCtx.expenses.find((expense) => expense.id === editedItemId)
+  const expenseItem = expenseCtx.expenses.find(
+    (expense) => expense.id === editedItemId
+  );
   const [title, setTitle] = useState(isEdited ? expenseItem.title : "");
   const [amount, setAmount] = useState(
     isEdited ? expenseItem.amount.toString() : ""
   );
 
-  useEffect(() => {
-    if(isEdited){
-      setTitle(expenseItem.title)
-      setAmount(expenseItem.amount.toString())
-    }
-    
-  }, [isEdited])
+  // useEffect(() => {
+  //   if (isEdited) {
+  //     setTitle(expenseItem.title);
+  //     setAmount(expenseItem.amount.toString());
+  //   }
+  // }, [isEdited]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -39,34 +43,75 @@ const ManageExpenses = ({ route, navigation }) => {
     });
   }, [navigation, isEdited]);
 
-  const onSave = async() => {
-    
-    const date = new Date().toDateString()
-    
-    const id = await storeExpense({ title: title, amount: amount * 1, date: date });
-    expenseCtx.addExpense({ title: title, amount: amount * 1, date: date, id: id });
+  const onSave = async () => {
+    setIsSubmitting(true);
+    try {
+      const date = new Date().toDateString();
+
+      const id = await storeExpense({
+        title: title,
+        amount: amount * 1,
+        date: date,
+      });
+      expenseCtx.addExpense({
+        title: title,
+        amount: amount * 1,
+        date: date,
+        id: id,
+      });
+      setTitle("");
+      setAmount(null);
+      navigation.goBack();
+    } catch (error) {
+      setError('Could not add expense - please try again later!')
+      setIsSubmitting(false);
+    }
+  };
+
+  const onRemove = () => {
+    // dispatch(removeExpense({id: editedItemId}))
+    setIsSubmitting(true);
+    try {
+      expenseCtx.removeExpense(editedItemId);
+      deleteExpense(editedItemId);
+      navigation.goBack();
+    } catch (error) {
+      setError("Could not delete expense - please try again later!");
+      setIsSubmitting(false);
+    }
+  };
+
+  const onCancel = () => {
     setTitle("");
     setAmount(null);
     navigation.goBack();
   };
 
-  const onRemove = () => {
-    // dispatch(removeExpense({id: editedItemId}))
-    console.log(editedItemId)
-    expenseCtx.removeExpense(editedItemId);
-    navigation.goBack();
+  const onUpdate = async () => {
+    setIsSubmitting(true);
+    try {
+      expenseCtx.updateExpense(editedItemId, { title, amount: amount * 1 });
+      await updateExpense(editedItemId, {
+        title: title,
+        amount: amount * 1,
+      });
+      navigation.goBack();
+    } catch (error) {
+      setError("Could not update expense- please try again later!");
+      setIsSubmitting(false);
+    }
   };
 
-  const onCancel = () => {
-    setTitle(""); 
-    setAmount(null);
-    navigation.goBack();
+  const errorHandler = () => {
+    setError(null);
+  };
+
+  if (error && !isSubmitting) {
+    return <ErrorOverlay message={error} onConfirm={errorHandler} />;
   }
 
-  const onUpdate = () => {
-    expenseCtx.updateExpense(editedItemId, {title, amount: amount*1});
-    navigation.goBack();
-
+  if (isSubmitting) {
+    return <LoadingOverlay />;
   }
 
   return (
@@ -112,7 +157,7 @@ const ManageExpenses = ({ route, navigation }) => {
           icon={<FontAwesome5 name="check" size={24} />}
           color={GlobalStyles.colors.white}
           bgColor={GlobalStyles.colors.blue}
-          onPress={isEdited? onUpdate: onSave}
+          onPress={isEdited ? onUpdate : onSave}
         />
         {isEdited && (
           <ButtonIcon
